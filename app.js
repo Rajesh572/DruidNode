@@ -76,6 +76,10 @@ app.get('/getData/api/wiki', (req, res) => {
         })
 })
 
+app.get('/health',(req,res)=>{
+    res.send("HEALTH OK");
+})
+
 
 app.listen(3000, () => {
     console.log("Server listening on 3000")
