@@ -1,12 +1,12 @@
 
 const all = {
     "queryType": "groupBy",
-    "dataSource": "socionGrouped",
+    "dataSource": "socion_grouped",
     "granularity": "Day",
     "dimensions": [
         "event_type",
         "topic_name",
-        "date"
+        "date","month"
     ],
     "aggregations": [
         {
@@ -22,12 +22,12 @@ const all = {
 
 const downloadContentReq = {
     "queryType": "groupBy",
-    "dataSource": "socionGrouped",
+    "dataSource": "socion_grouped",
     "granularity": "Day",
     "dimensions": [
         "event_type",
         "topic_name",
-        "date"
+        "date","month"
     ],
     "filter":{"type":"and",
     	"fields": [
@@ -47,12 +47,12 @@ const downloadContentReq = {
 
 const sessionCompletedReq = {
     "queryType": "groupBy",
-    "dataSource": "socionGrouped",
+    "dataSource": "socion_grouped",
     "granularity": "Day",
     "dimensions": [
         "event_type",
         "topic_name",
-        "date"
+        "date","month"
     ],
     "filter":{"type":"and",
     	"fields": [
@@ -72,12 +72,12 @@ const sessionCompletedReq = {
 
 const generateAttestationReq = {
     "queryType": "groupBy",
-    "dataSource": "socionGrouped",
+    "dataSource": "socion_grouped",
     "granularity": "Day",
     "dimensions": [
         "event_type",
         "topic_name",
-        "date"
+        "date","month"
     ],
     "filter":{"type":"and",
     	"fields": [
@@ -95,6 +95,6 @@ const generateAttestationReq = {
     ]
 }
 
-module.exports = {req,downloadContentReq,sessionCompletedReq,generateAttestationReq}
+module.exports = {all,downloadContentReq,sessionCompletedReq,generateAttestationReq}
 
 
