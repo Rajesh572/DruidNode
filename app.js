@@ -3,80 +3,73 @@ const bodyparser = require("body-parser")
 const cors = require("cors")
 const axios = require("axios")
 const app = express()
+const requests = require("./configs")
 
 app.use(cors());
 
-app.get('/getData', (req, res) => {
-    axios.post("http://localhost:8082/druid/v2/sql", {
-        "query": "SELECT * from SocionData"
-    }).then((response) => {
-        data = response.data;
-        res.send({ data });
-    }).
+app.get("/getData/api/getGrouped", (req, res) => {
+    axios.post("http://localhost:8082/druid/v2", requests.all)
+        .then((response) => {
+            var dataArr = []
+            response.data.forEach(element => {
+                dataArr.push(element['event'])
+            });
+            res.send({"data":dataArr})
+        }).
         catch((err) => {
             console.log(err)
-            res.send("ERROR")
+            res.send("error")
         })
 })
 
-//for pie and bar charts , returns topicname,programname and date)
-app.get('/getData/api/id1', (req, res) => {
-
-    axios.post("http://localhost:8082/druid/v2/sql", {
-        "query": `select topic_name,program_name,"date" FROM SocionData`
-    }).then((response) => {
-        data = response.data;
-        res.send({ data });
-    }).
+app.get("/getData/api/getDownloadContentData", (req, res) => {
+    axios.post("http://localhost:8082/druid/v2", requests.downloadContentReq)
+        .then((response) => {
+            var dataArr = []
+            response.data.forEach(element => {
+                dataArr.push(element['event'])
+            });
+            res.send({"data":dataArr})
+        }).
         catch((err) => {
             console.log(err)
-            res.send("ERROR")
+            res.send("error")
         })
 })
 
 
-//for sunburst returns topicname,programname,sessionname and date
-app.get('/getData/api/id2', (req, res) => {
-    axios.post("http://localhost:8082/druid/v2/sql", {
-        "query": `select topic_name,program_name,session_name,"date" FROM SocionData`
-    }).then((response) => {
-        data = response.data;
-        res.send({ data });
-    }).
+app.get("/getData/api/getGenerateAttestationData", (req, res) => {
+    axios.post("http://localhost:8082/druid/v2", requests.generateAttestationReq)
+        .then((response) => {
+            var dataArr = []
+            response.data.forEach(element => {
+                dataArr.push(element['event'])
+            });
+            res.send({"data":dataArr})
+        }).
         catch((err) => {
             console.log(err)
-            res.send("ERROR")
+            res.send("error")
         })
 })
 
-//for all
-app.get('/getData/api/id3', (req, res) => {
-    axios.post("http://localhost:8082/druid/v2/sql", {
-        "query": `select * FROM SocionData`
-    }).then((response) => {
-        data = response.data;
-        res.send({ data });
-    }).
+app.get("/getData/api/getSessionCompletedData", (req, res) => {
+    axios.post("http://localhost:8082/druid/v2", requests.sessionCompletedReq)
+        .then((response) => {
+            var dataArr = []
+            response.data.forEach(element => {
+                dataArr.push(element['event'])
+            });
+            res.send({"data":dataArr})
+        }).
         catch((err) => {
             console.log(err)
-            res.send("ERROR")
+            res.send("error")
         })
 })
 
-app.get('/getData/api/wiki', (req, res) => {
-    axios.post("http://localhost:8082/druid/v2/sql", {
-        "query": `select * FROM wikipedia LIMIT 3000`
-    }).then((response) => {
-        data = response.data;
-        res.send({ data });
-    }).
-        catch((err) => {
-            console.log(err)
-            res.send("ERROR")
-        })
-})
 
-app.get('/health',(req,res)=>{
+app.get('/health', (req, res) => {
     res.send("HEALTH OK");
 })
 
