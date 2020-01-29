@@ -2,11 +2,10 @@
 const all = {
     "queryType": "groupBy",
     "dataSource": "socion_grouped",
-    "granularity": "Day",
+    "granularity": "Month",
     "dimensions": [
         "event_type",
-        "topic_name",
-        "date","month"
+        "month"
     ],
     "aggregations": [
         {
@@ -19,15 +18,37 @@ const all = {
         "2018-10-07T00:00:00.000Z/2020-10-30T00:00:00.000Z"
     ]
 }
+/* 
+const all = {
+    "queryType": "groupBy",
+    "dataSource": "socion_eventCounts",
+    "granularity": "Month",
+    "dimensions": [
+        "month"
+    ],
+    "aggregations": [
+        {
+            "type": "longSum",
+            "name": "attestation_count",
+            "fieldName": "sum_generate_attestation_count"
+        },{
+            "type": "longSum",
+            "name": "session_count",
+            "fieldName": "sum_session_completed_count"
+        }
+    ],
+    "intervals": [
+        "2018-10-07T00:00:00.000Z/2020-10-30T00:00:00.000Z"
+    ]
+} */
 
 const downloadContentReq = {
     "queryType": "groupBy",
     "dataSource": "socion_grouped",
-    "granularity": "Day",
+    "granularity": "Month",
     "dimensions": [
         "event_type",
-        "topic_name",
-        "date","month"
+        "month"
     ],
     "filter":{"type":"and",
     	"fields": [
@@ -48,11 +69,10 @@ const downloadContentReq = {
 const sessionCompletedReq = {
     "queryType": "groupBy",
     "dataSource": "socion_grouped",
-    "granularity": "Day",
+    "granularity": "Month",
     "dimensions": [
         "event_type",
-        "topic_name",
-        "date","month"
+        "month"
     ],
     "filter":{"type":"and",
     	"fields": [
@@ -73,16 +93,13 @@ const sessionCompletedReq = {
 const generateAttestationReq = {
     "queryType": "groupBy",
     "dataSource": "socion_grouped",
-    "granularity": "Day",
+    "granularity": "Month",
     "dimensions": [
         "event_type",
-        "topic_name",
-        "date","month"
+        "month"
     ],
-    "filter":{"type":"and",
-    	"fields": [
-      { "type": "selector", "dimension": "event_type", "value": "Generate Attestation" }]
-    },
+    "filter":
+      { "type": "selector", "dimension": "event_type", "value": "Generate Attestation" },
     "aggregations": [
         {
             "type": "longSum",
