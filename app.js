@@ -94,6 +94,24 @@ app.get('/getFiltered',(req,res)=>{
     })
 })
 
+app.get('/getUniqueByMonth',(req,res)=>{
+    dimension = req.query.dimension;
+    filterval=req.query.filterval;
+    request=index.generateUniqueRecReq(dimension,filterval)
+    axios.post("http://localhost:8082/druid/v2", request)
+    .then((response) => {
+        var dataArr = []
+        response.data.forEach(element => {
+            dataArr.push(element['event'])
+        });
+        res.send({"data":dataArr})
+    }).
+    catch((err) => {
+        console.log(err)
+        res.send("error")
+    })
+})
+
 app.listen(3000, () => {
     console.log("Server listening on 3000")
 })

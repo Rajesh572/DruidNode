@@ -1,11 +1,11 @@
-function generateReq(dimension,filterval) {
+function generateReq(dimension, filterval) {
 
     var Req = {
         queryType: "groupBy",
-        dataSource: "socion_grouped",
+        dataSource: "socionDataWithLocation",
         granularity: "Month",
         dimensions: [
-            "event_type",
+
             dimension
         ],
         filter:
@@ -23,4 +23,33 @@ function generateReq(dimension,filterval) {
     }
     return Req
 }
-module.exports = {generateReq}
+
+function generateUniqueRecReq(dimension, filterval) {
+
+    var Req = {
+        queryType: "groupBy",
+        dataSource: "socionDataWithLocation",
+        granularity: "Month",
+        dimensions: [
+            dimension
+        ],
+        filter:
+        {
+            "type": "selector",
+            "dimension": "role",
+            "value": filterval
+        },
+        aggregations: [
+            {
+                type: "distinctCount",
+                name: "count",
+                fieldName: "user_id"
+            }
+        ],
+        intervals: [
+            "2018-10-07T00:00:00.000Z/2020-10-30T00:00:00.000Z"
+        ]
+    }
+    return Req
+}
+module.exports = { generateReq, generateUniqueRecReq }
